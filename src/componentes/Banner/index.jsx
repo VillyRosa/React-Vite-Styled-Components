@@ -2,15 +2,15 @@ import styled from "styled-components";
 
 const FigureEstilizada = styled.figure`
   background-image: url(${props => props.$backgroundImage});
-  flex-grow: 1;
   background-repeat: no-repeat;
+  background-size: cover;
+  flex-grow: 1;
   display: flex;
   align-items: center;
   min-height: 328px;
   margin: 0;
   border-radius: 20px;
-  max-width: 100%;
-  background-image: cover;
+  width: 100%;
 `;
 
 const TituloEstilizado = styled.h1`
