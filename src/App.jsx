@@ -8,6 +8,7 @@ import Galeria from "./componentes/Galeria";
 import fotos from './fotos.json';
 import { useState } from "react";
 import ModalZoom from "./componentes/ModalZoom";
+import Footer from "./componentes/Footer";
 
 const FundoGradiente = styled.div`
   width: 100%;
@@ -37,6 +38,12 @@ const App = () => {
   const [fotoSelecionada, setFotoSelecionada] = useState(null);
 
   const aoAlternarFavorito = (foto) => {
+    if (foto.id === fotoSelecionada?.id) {
+      setFotoSelecionada({
+        ...fotoSelecionada,
+        favorita: !fotoSelecionada.favorita
+      });
+    }
     setFotosGaleria(fotosGaleria.map(fotoDaGaleria => {
       return {
         ...fotoDaGaleria,
@@ -57,15 +64,20 @@ const App = () => {
               texto="A galeria mais completa de fotos do espaço!"
               backgroundImage={bannerBackground}
             />
-            <Galeria 
+            <Galeria
               aoFotoSelecionada={foto => setFotoSelecionada(foto)}
               aoAlternarFavorito={aoAlternarFavorito}
               fotos={fotosGaleria}
             />
           </ConteudoGaleria>
         </MainContainer>
+        <Footer />
       </AppContainer>
-      <ModalZoom foto={fotoSelecionada} aoFechar={() => setFotoSelecionada(null)} aoAlternarFavorito={aoAlternarFavorito} />
+      <ModalZoom
+        foto={fotoSelecionada}
+        aoFechar={() => setFotoSelecionada(null)}
+        aoAlternarFavorito={aoAlternarFavorito} 
+      />
     </FundoGradiente>
   )
 };
