@@ -3,9 +3,11 @@ import EstilosGlobais from "./componentes/EstilosGlobais";
 import Cabecalho from "./componentes/Cabecalho";
 import BarraLateral from "./componentes/BarraLateral";
 import Banner from "./componentes/Banner";
-
 import bannerBackground from './assets/banner.png'
 import Galeria from "./componentes/Galeria";
+import fotos from './fotos.json';
+import { useState } from "react";
+import ModalZoom from "./componentes/ModalZoom";
 
 const FundoGradiente = styled.div`
   width: 100%;
@@ -30,7 +32,19 @@ const ConteudoGaleria = styled.section`
   flex-grow: 1;
 `;
 
-function App() {
+const App = () => {
+  const [fotosGaleria, setFotosGaleria] = useState(fotos);
+  const [fotoSelecionada, setFotoSelecionada] = useState(null);
+
+  const aoAlternarFavorito = (foto) => {
+    setFotosGaleria(fotosGaleria.map(fotoDaGaleria => {
+      return {
+        ...fotoDaGaleria,
+        favorita: fotoDaGaleria.id === foto.id ? !foto.favorita : fotoDaGaleria.favorita
+      };
+    }));
+  };
+
   return (
     <FundoGradiente>
       <EstilosGlobais />
@@ -39,16 +53,21 @@ function App() {
         <MainContainer>
           <BarraLateral />
           <ConteudoGaleria>
-            <Banner 
-              texto="A galeria mais completa de fotos do espaço!" 
-              backgroundImage={bannerBackground} 
+            <Banner
+              texto="A galeria mais completa de fotos do espaço!"
+              backgroundImage={bannerBackground}
             />
-            <Galeria />
+            <Galeria 
+              aoFotoSelecionada={foto => setFotoSelecionada(foto)}
+              aoAlternarFavorito={aoAlternarFavorito}
+              fotos={fotosGaleria}
+            />
           </ConteudoGaleria>
         </MainContainer>
       </AppContainer>
+      <ModalZoom foto={fotoSelecionada} aoFechar={() => setFotoSelecionada(null)} aoAlternarFavorito={aoAlternarFavorito} />
     </FundoGradiente>
   )
-}
+};
 
 export default App;
