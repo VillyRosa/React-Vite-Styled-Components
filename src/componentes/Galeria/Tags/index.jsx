@@ -1,9 +1,9 @@
 const Tags = () => {
-    return (
-        <>
-          <p></p>
-        </>
-    )
+  return (
+    <>
+      <p>Tag</p>
+    </>
+  )
 }
 
 export default Tags;
